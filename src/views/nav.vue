@@ -135,14 +135,19 @@ export default {
     created () {
         let items = this.items;
         this.items = [];
-        this.$http.get(this.$apiUrl.SETTING_getAccount, {}).then(res => {
+        //2个接口先后发起请求-后在渲染页面-赋值
+        //获取用户信息
+        this.$http.get(this.$apiUrl.ACCOUNT_userInfo, {}).then(res => {
             if (res.code == 0) {
                 this.userinfo = res.data;
             }
         });
-        let ths = this;
-        this.$http.post(this.$apiUrl.PERMISSION_menu, {}).then(res => {
-            if (res.code) return;
+        //获取菜单信息
+        this.$http.get(this.$apiUrl.ACCOUNT_menu, {}).then(res => {
+            if (res.code != 0) {
+                this.$Message.error(res.msg || "获取菜单接口异常");
+            }
+            const ths = this;
             for (let index in items) {
                 let chind_item = [];
                 let item = items[index];
@@ -229,30 +234,31 @@ export default {
             }
             this.$router.push({ name: name });
         },
+        //退出弹出框
         showLogoutModal () {
-            const ths = this;
             this.$Modal.confirm({
                 title: "退出!",
                 content: "<p>您确定要退出登录么</p>",
                 onOk: () => {
-                    ths.logout();
+                    this.logout();
                 }
             });
         },
+        //退出方法
         logout () {
-            const ths = this;
-            ths.$cookie.delete("is_login");
-            ths.$cookie.delete("qc_session");
-            this.$http.post(this.$apiUrl.Logout, {}).then(res => {
+            this.$http.post(this.$apiUrl.ACCOUNT_logout, {}).then(res => {
                 if (res.code == 0) {
-                    ths.$Message.success(res.message);
+                    this.$cookie.delete("is_login");
+                    this.$cookie.delete("token");
+                    this.$Message.success(res.msg);
+                    setTimeout(() => {
+                        this.$router.push({ name: "login" });
+                    }, 300);
                 } else {
-                    ths.$Message.error(res.message || "请求失败！");
+                    this.$Message.error(res.msg || "请求失败！");
                 }
             });
-            setTimeout(() => {
-                ths.$router.push({ name: "login" });
-            }, 500);
+
         }
     }
 };

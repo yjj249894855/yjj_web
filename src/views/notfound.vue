@@ -19,17 +19,15 @@
         transform: rotateZ(0deg);
     }
 }
-.error404-body-con{
+.error404-body-con {
     width: 700px;
     height: 500px;
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%,-50%);
-    
-
+    transform: translate(-50%, -50%);
 }
-.error404-title{
+.error404-title {
     text-align: center;
     font-size: 240px;
     font-weight: 700;
@@ -37,15 +35,14 @@
     height: 260px;
     line-height: 260px;
     margin-top: 40px;
-
 }
-.error404-title span{
+.error404-title span {
     display: inline-block;
     color: #19be6b;
     font-size: 230px;
     animation: error404animation 3s ease 0s infinite alternate;
 }
-.error404-message{
+.error404-message {
     display: block;
     text-align: center;
     font-size: 30px;
@@ -53,7 +50,7 @@
     letter-spacing: 12px;
     color: #dddde2;
 }
-.error404-btn-con{
+.error404-btn-con {
     text-align: center;
     padding: 20px 0;
     margin-bottom: 40px;
@@ -63,7 +60,9 @@
     <div class="error404">
         <div class="error404-body-con">
             <Card shadow bordered>
-                <div class="error404-title">4<span><Icon type="ios-navigate-outline"></Icon></span>4</div>
+                <div class="error404-title">4<span>
+                        <Icon type="ios-navigate-outline"></Icon>
+                    </span>4</div>
                 <p class="error404-message">YOU&nbsp;&nbsp;LOOK&nbsp;&nbsp;LOST</p>
                 <div class="error404-btn-con">
                     <Button @click="goHome" size="large" style="width: 200px;" type="text">返回首页</Button>

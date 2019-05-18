@@ -2,12 +2,17 @@ const apiUrl = {
     install (Vue) {
         Vue.prototype.$apiUrl = this;
     },
+    //登录-退出
+    ACCOUNT_login: '/api/user/login',
+    ACCOUNT_logout: '/api/user/logout',
+    ACCOUNT_userInfo: '/api/user/userInfo',
+    //基础获取菜单和用户信息
+    ACCOUNT_userInfo: '/api/user/userInfo',
+    ACCOUNT_menu: '/api/user/menu',
     PUBLIC_GetConfig: '/api/public/config/getConfig',
     PUBLIC_GetIntervalList: '/api/public/config/getIntervalList',
-    Logout: '/api/userAccount/logout',
 
-    ACCOUNT_login: '/api/userAccount/login',
-    ACCOUNT_getAccount: '/api/userAccount/getAccount',
+
     ACCOUNT_editAccount: '/api/userAccount/editAccount',
     ACCOUNT_getAccountList: '/api/userAccount/list',
     ACCOUNT_deleteAccount: '/api/userAccount/deleteAccout',

@@ -1,7 +1,7 @@
 <<template>
     <div>
         <Modal v-model="modal" title="退出" :loading="loading" @on-ok="logout">
-            <p>是否确定退出登录</p>
+            <p>是否确定退出登录11</p>
         </Modal>
     </div>  
 </template>

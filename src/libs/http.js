@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import axios from 'axios';
 const Http = {
     install (Vue, option) {
@@ -14,9 +15,10 @@ const Http = {
         const ths = this;
         axios.defaults.withCredentials = true;
         this.$ajax.interceptors.response.use(function (res) {
+            //console.log(res);
             // Do something with response data
             if (res.data) {
-                //未登录，AJAX直接跳转登录页面
+                //未登录，AJAX直接跳转登录页面-暂定-需要知道未登陆的code
                 if (res.data.code == 1001 && ths.router) {
                     ths.router.replace('/login');
                 }
@@ -38,14 +40,14 @@ const Http = {
         Vue.http = this;
     },
     get: function (url, params) {
-        let token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ4MWVkMGE4MzA3MTdiZDAzNmYwNDQ0ZTIzOWRlNDY3MWM3NWUyNGRiOGZkNjVmNWRmYzNjNDczOWMyMTBkOWVjZjE5ZGEwM2QzYzRiODMxIn0.eyJhdWQiOiIxIiwianRpIjoiNDgxZWQwYTgzMDcxN2JkMDM2ZjA0NDRlMjM5ZGU0NjcxYzc1ZTI0ZGI4ZmQ2NWY1ZGZjM2M0NzM5YzIxMGQ5ZWNmMTlkYTAzZDNjNGI4MzEiLCJpYXQiOjE1NTc5MTE3MjUsIm5iZiI6MTU1NzkxMTcyNSwiZXhwIjoxNTg5NTM0MTI1LCJzdWIiOiI1Iiwic2NvcGVzIjpbXX0.IgEnJWwk0h-WhNQy_9TW_pPS64qJNDvg09fy9zwji-LXmaQGL4cvwU8A7yes772pfLK7Gn6znvBkQAH4j31gRRj9UbuXB7KRw8-yeH6gjin6p3mEbUlJq_C8Uu9dQEeYN8T9UZy_aVME8I0VnaJzIrCRIpP8yzlIe_H62wDQu9S_KCAdUTHUOwy0DJov2JDflE0_VehUVTVoeX8BII4uWRtXjrov9rP6Ccc1Omigr77E7FDxsBugt5QLjOK5Cfms2CXfMedTUlbO5gammWyO6OUvd1Q44qFrE4AtbvP5x5gbPiwqXv0i2OxQugJTxEwYYYtMrertVs8dayjXDw-zrkxbQorazLxJS1xBrBzv0FD1wpLSdhkv9zDwwEPV3AzKUTs_FHwq1fBldRcNTKmlL_6R2D7xLShcPOtHZypnmIpwSSViroC88-mVRA-je-LOfH3MMqz89iVDekzLSSe_U2UdFlhZKBKvCJJcDzOnIalwS3KtzENCgBQ0lUeYdppyZQ_4cl8CkxIKQgQGTm1FOF7dbgjHE6xWULB-9qowwDwbzG1s1iAG9WBXUYi9kKcrzOntIIsioZVJmFsyBM6WFoE6RnC5AmF0-YbSBChGif8CkyPnH3Eu5Vvt2UKGpdDJT3Cn_yZ56X7eRVuIXbtjuuQD2N5iI3vagKM1ERBKvto';
+        let token = Vue.cookie.get('token');
         let headers = {
             'Authorization': 'Bearer ' + token,
         }
         return this.$ajax.get(url, { headers: headers, params: params ? params : {} });
     },
     post: function (url, params) {
-        let token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ4MWVkMGE4MzA3MTdiZDAzNmYwNDQ0ZTIzOWRlNDY3MWM3NWUyNGRiOGZkNjVmNWRmYzNjNDczOWMyMTBkOWVjZjE5ZGEwM2QzYzRiODMxIn0.eyJhdWQiOiIxIiwianRpIjoiNDgxZWQwYTgzMDcxN2JkMDM2ZjA0NDRlMjM5ZGU0NjcxYzc1ZTI0ZGI4ZmQ2NWY1ZGZjM2M0NzM5YzIxMGQ5ZWNmMTlkYTAzZDNjNGI4MzEiLCJpYXQiOjE1NTc5MTE3MjUsIm5iZiI6MTU1NzkxMTcyNSwiZXhwIjoxNTg5NTM0MTI1LCJzdWIiOiI1Iiwic2NvcGVzIjpbXX0.IgEnJWwk0h-WhNQy_9TW_pPS64qJNDvg09fy9zwji-LXmaQGL4cvwU8A7yes772pfLK7Gn6znvBkQAH4j31gRRj9UbuXB7KRw8-yeH6gjin6p3mEbUlJq_C8Uu9dQEeYN8T9UZy_aVME8I0VnaJzIrCRIpP8yzlIe_H62wDQu9S_KCAdUTHUOwy0DJov2JDflE0_VehUVTVoeX8BII4uWRtXjrov9rP6Ccc1Omigr77E7FDxsBugt5QLjOK5Cfms2CXfMedTUlbO5gammWyO6OUvd1Q44qFrE4AtbvP5x5gbPiwqXv0i2OxQugJTxEwYYYtMrertVs8dayjXDw-zrkxbQorazLxJS1xBrBzv0FD1wpLSdhkv9zDwwEPV3AzKUTs_FHwq1fBldRcNTKmlL_6R2D7xLShcPOtHZypnmIpwSSViroC88-mVRA-je-LOfH3MMqz89iVDekzLSSe_U2UdFlhZKBKvCJJcDzOnIalwS3KtzENCgBQ0lUeYdppyZQ_4cl8CkxIKQgQGTm1FOF7dbgjHE6xWULB-9qowwDwbzG1s1iAG9WBXUYi9kKcrzOntIIsioZVJmFsyBM6WFoE6RnC5AmF0-YbSBChGif8CkyPnH3Eu5Vvt2UKGpdDJT3Cn_yZ56X7eRVuIXbtjuuQD2N5iI3vagKM1ERBKvto';
+        let token = Vue.cookie.get('token');
         let headers = {
             'Authorization': 'Bearer ' + token,
         };

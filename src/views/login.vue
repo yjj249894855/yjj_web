@@ -44,7 +44,6 @@
 }
 </style>
 <script>
-import md5 from "js-md5";
 export default {
     data () {
         return {
@@ -93,32 +92,32 @@ export default {
             }
         },
         handleSubmit (name) {
-            const self = this;
             this.$refs[name].validate(valid => {
                 if (valid) {
-                    self.isloading = true;
-                    self.$http
+                    this.isloading = true;
+                    this.$http
                         .post(this.$apiUrl.ACCOUNT_login, {
-                            email: self.userData.mail,
-                            password: md5(self.userData.pswd)
+                            email: this.userData.mail,
+                            password: this.userData.pswd
                         })
                         .then(res => {
                             if (res.code == 0) {
-                                self.$cookie.set("is_login", 1);
-                                self.$cookie.set("email", self.userData.mail);
-                                self.$Message.success("登录成功!");
-                                //if (self.userData.login_type == 0) {
-                                self.$router.replace("/");
+                                this.$cookie.set("is_login", 1);
+                                this.$cookie.set("email", this.userData.mail);
+                                this.$cookie.set("token", res.data.token);
+                                this.$Message.success("登录成功!");
+                                //if (this.userData.login_type == 0) {
+                                this.$router.replace("/");
                                 // } else {
-                                //   self.$router.replace("/admin");
+                                //   this.$router.replace("/admin");
                                 // }
                             } else {
-                                self.$Message.error(res.message || "登录失败！");
+                                this.$Message.error(res.msg || "登录失败！");
                             }
-                            self.isloading = false;
+                            this.isloading = false;
                         });
                 } else {
-                    self.$Message.error("请输入正确的登陆信息!");
+                    this.$Message.error("请输入正确的登陆信息!");
                 }
             });
         }
