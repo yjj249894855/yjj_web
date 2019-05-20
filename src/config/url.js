@@ -5,10 +5,13 @@ const apiUrl = {
     //登录-退出
     ACCOUNT_login: '/api/user/login',
     ACCOUNT_logout: '/api/user/logout',
-    ACCOUNT_userInfo: '/api/user/userInfo',
     //基础获取菜单和用户信息
     ACCOUNT_userInfo: '/api/user/userInfo',
     ACCOUNT_menu: '/api/user/menu',
+    //admin用户模块
+    ACCOUNT_userList: '/api/user/list',
+    ACCOUNT_userList: '/api/user/add',
+    ACCOUNT_del: '/api/user/del',
     PUBLIC_GetConfig: '/api/public/config/getConfig',
     PUBLIC_GetIntervalList: '/api/public/config/getIntervalList',
 

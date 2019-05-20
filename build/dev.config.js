@@ -5,10 +5,11 @@ const merge = require('webpack-merge');
 const webpackBaseConfig = require('./base.config.js');
 const fs = require('fs');
 
-fs.open('./src/config/env.js', 'w', function(err, fd) {
+fs.open('./src/config/env.js', 'w', function (err, fd) {
     const buf = 'export default "local";';
+    //node-v 版本问题
     //fs.write(fd, buf, 0, buf.length, 0, function(err, written, buffer) {});
-    fs.write(fd, buf, 0, 'utf-8', function(err, written, buffer) {});
+    fs.write(fd, buf, 0, 'utf-8', function (err, written, buffer) { });
 });
 
 module.exports = merge(webpackBaseConfig, {

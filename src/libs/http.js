@@ -15,7 +15,6 @@ const Http = {
         const ths = this;
         axios.defaults.withCredentials = true;
         this.$ajax.interceptors.response.use(function (res) {
-            //console.log(res);
             // Do something with response data
             if (res.data) {
                 //未登录，AJAX直接跳转登录页面-暂定-需要知道未登陆的code
@@ -27,13 +26,18 @@ const Http = {
                 return { code: res.status, message: '服务开小差了，请稍后重试！' };
             }
         }, function (e) {
+            //404错误
             if (e && e.message == 'Network Error') {
-                return { code: -2, message: '网络连不上了，稍后再试一下！' };
+                return { code: -4, msg: '网络连不上了，稍后再试一下！' };
+            }
+            //500错误
+            if (e && e.message == 'Request failed with status code 500') {
+                return { code: -5, msg: '服务出错了，请稍后重试！' };
             }
             if (e && (e.code == 'ECONNABORTED' || e.message == 'ECONNABORTED')) {
-                return { code: -3, message: '接口超时，请联系一下工程师！' };
+                return { code: -5, msg: '接口超时，请联系一下工程师！' };
             }
-            return { code: -1, message: '出错了，请稍后重试！' };
+            return { code: -1, msg: '出错了，请稍后重试！' };
         });
         this.baseUrl = url;
         Vue.prototype.$http = this;

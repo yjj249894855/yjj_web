@@ -67,9 +67,9 @@
                     <Row type="flex" justify="center" align="middle">
                         <Icon @click.native="collapsedSider" :class="rotateIcon" type="navicon-round" size="30" :style="{margin: '20px'}"></Icon>
                         <Breadcrumb>
-                            <Breadcrumb-item v-for="item in $route.matched">
+                            <!-- <Breadcrumb-item v-for="item in $route.matched">
                                 <router-link :to="item.path">{{ item.meta.title }}</router-link>
-                            </Breadcrumb-item>
+                            </Breadcrumb-item> -->
                         </Breadcrumb>
                     </Row>
                     <Row type="flex" justify="center" align="middle" :style="{'margin': '0 20px 0 0'}">
@@ -109,7 +109,7 @@ export default {
                     icon: "person-stalker",
                     title_name: "system",
                     subitems: [
-                        { title: "账号列表", icon: "ios-barcode", name: "account_list" },
+                        { title: "用户列表", icon: "ios-barcode", name: "user_list" },
                         { title: "模块管理", icon: "ios-folder", name: "merchant_module" },
                         { title: "权限KEY", icon: "ios-navigate", name: "system_key" },
                         { title: "系统角色", icon: "ios-person", name: "system_role" },
@@ -146,6 +146,7 @@ export default {
         this.$http.get(this.$apiUrl.ACCOUNT_menu, {}).then(res => {
             if (res.code != 0) {
                 this.$Message.error(res.msg || "获取菜单接口异常");
+                return;
             }
             const ths = this;
             for (let index in items) {
@@ -258,7 +259,6 @@ export default {
                     this.$Message.error(res.msg || "请求失败！");
                 }
             });
-
         }
     }
 };
