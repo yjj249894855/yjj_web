@@ -40,12 +40,12 @@ export default {
             pageSize: 3,
             tableColumns: [
                 {
-                    title: '姓名',
-                    key: 'name'
-                },
-                {
                     title: 'email账号',
                     key: 'email'
+                },
+                {
+                    title: '姓名',
+                    key: 'name'
                 },
                 {
                     title: '创建时间',
@@ -71,7 +71,7 @@ export default {
                                 },
                                 on: {
                                     click: () => {
-                                        this.show(params.row.id)
+                                        this.edit(params.row.id)
                                     }
                                 }
                             }, '修改'),
@@ -82,7 +82,7 @@ export default {
                                 },
                                 on: {
                                     click: () => {
-                                        this.remove(params.index, params.row.id)
+                                        this.del(params.index, params.row.id)
                                     }
                                 }
                             }, '删除')
@@ -99,23 +99,23 @@ export default {
         add () {
             this.$router.push({ name: 'add' });
         },
-        show (id) {
-            this.$router.push({ path: '/user/info', query: { account_id: id } })
+        edit (id) {
+            this.$router.push({ path: '/user_admin/edit', query: { user_id: id } })
         },
-        remove (index, id) {
+        //删除
+        del (index, id) {
             this.$Modal.confirm({
                 title: '确认提示框',
                 content: '<p>确认删除吗?</p>',
                 onOk: () => {
-                    this.$http.post(this.$apiUrl.ACCOUNT_delete, {
-                        account_id: id
-                    }).then(res => {
+                    this.$http.delete(this.$apiUrl.API_USER + id).then(res => {
                         if (res.code == 0) {
+                            //移除表格的当前行
                             this.listTable.splice(index, 1);
                             this.search(this.listTable.length ? this.current : 1);
-                            this.$Message.success(res.message);
+                            this.$Message.success(res.msg);
                         } else {
-                            this.$Message.error(res.message || '请求失败！');
+                            this.$Message.error(res.msg || '请求失败！');
                         }
                     });
                 },
@@ -125,7 +125,7 @@ export default {
         search (page) {
             page = !page ? 1 : page;
             this.isloading = true;
-            this.$http.get(this.$apiUrl.ACCOUNT_userList, {
+            this.$http.get(this.$apiUrl.API_USER, {
                 page: page,
                 limit: this.pageSize,
                 name: this.filterData.name,

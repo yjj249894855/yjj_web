@@ -137,13 +137,13 @@ export default {
         this.items = [];
         //2个接口先后发起请求-后在渲染页面-赋值
         //获取用户信息
-        this.$http.get(this.$apiUrl.ACCOUNT_userInfo, {}).then(res => {
+        this.$http.get(this.$apiUrl.API_BASE_USER_INFO, {}).then(res => {
             if (res.code == 0) {
                 this.userinfo = res.data;
             }
         });
         //获取菜单信息
-        this.$http.get(this.$apiUrl.ACCOUNT_menu, {}).then(res => {
+        this.$http.get(this.$apiUrl.API_BASE_MENU, {}).then(res => {
             if (res.code != 0) {
                 this.$Message.error(res.msg || "获取菜单接口异常");
                 return;
@@ -247,7 +247,7 @@ export default {
         },
         //退出方法
         logout () {
-            this.$http.post(this.$apiUrl.ACCOUNT_logout, {}).then(res => {
+            this.$http.post(this.$apiUrl.API_MAIN_LOGOUT, {}).then(res => {
                 if (res.code == 0) {
                     this.$cookie.delete("is_login");
                     this.$cookie.delete("token");

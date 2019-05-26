@@ -96,7 +96,7 @@ export default {
                 if (valid) {
                     this.isloading = true;
                     this.$http
-                        .post(this.$apiUrl.ACCOUNT_login, {
+                        .post(this.$apiUrl.API_MAIN_LOGIN, {
                             email: this.userData.mail,
                             password: this.userData.pswd
                         })

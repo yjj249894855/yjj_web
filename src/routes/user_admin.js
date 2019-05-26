@@ -20,7 +20,15 @@ const user_admin = {
             title: '新增帐号'
         },
         component: require('../views/user_admin/add.vue')
+    }, {
+        path: '/user_admin/edit',
+        name: 'user_edit',
+        meta: {
+            title: '修改账号'
+        },
+        component: require('../views/user_admin/edit.vue')
     }]
 };
 const user = [user_admin];
 export default user;
+

@@ -30,6 +30,9 @@ const Http = {
             if (e && e.message == 'Network Error') {
                 return { code: -4, msg: '网络连不上了，稍后再试一下！' };
             }
+            if (e && e.message == 'Request failed with status code 405') {
+                return { code: -4, msg: 'Method Not Allowed' };
+            }
             //500错误
             if (e && e.message == 'Request failed with status code 500') {
                 return { code: -5, msg: '服务出错了，请稍后重试！' };
@@ -47,6 +50,7 @@ const Http = {
         let token = Vue.cookie.get('token');
         let headers = {
             'Authorization': 'Bearer ' + token,
+            'Accept': 'application/x.laravel_api.v1+json'
         }
         return this.$ajax.get(url, { headers: headers, params: params ? params : {} });
     },
@@ -54,8 +58,25 @@ const Http = {
         let token = Vue.cookie.get('token');
         let headers = {
             'Authorization': 'Bearer ' + token,
+            'Accept': 'application/x.laravel_api.v1+json'
         };
         return this.$ajax.post(url, params ? params : {}, { headers: headers });
+    },
+    put: function (url, params) {
+        let token = Vue.cookie.get('token');
+        let headers = {
+            'Authorization': 'Bearer ' + token,
+            'Accept': 'application/x.laravel_api.v1+json'
+        };
+        return this.$ajax.put(url, params ? params : {}, { headers: headers });
+    },
+    delete: function (url, params) {
+        let token = Vue.cookie.get('token');
+        let headers = {
+            'Authorization': 'Bearer ' + token,
+            'Accept': 'application/x.laravel_api.v1+json'
+        };
+        return this.$ajax.delete(url, { headers: headers, params: params ? params : {} });
     }
 };
 export default Http;
